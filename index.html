@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vedika's Birthday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body, html {
+            width: 100vw;
+            height: 100vh;
+            background: #fff0f3;
+            color: #5c4033;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .fullscreen-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #ffe5ec 0%, #fff0f3 100%);
+            z-index: 2;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 4vw, 4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff758c, #ff8fab, #ffb3c6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+            color: #7b5b5b;
+            max-width: 700px;
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Stage 0: Main Sunflower */
+        .main-gift {
+            font-size: clamp(6rem, 12vw, 9rem);
+            cursor: pointer;
+            filter: drop-shadow(0 15px 30px rgba(255, 117, 140, 0.3));
+            animation: floatGift 3s ease-in-out infinite alternate;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            line-height: 1;
+        }
+
+        .main-gift:hover {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        @keyframes floatGift {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(-3deg); }
+        }
+
+        /* 4 Mystery Boxes Grid */
+        .mystery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 85vw;
+            max-width: 1100px;
+            margin-top: 20px;
+        }
+
+        .mystery-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px dashed rgba(255, 143, 171, 0.5);
+            border-radius: 25px;
+            padding: 30px 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+        }
+
+        .mystery-box span {
+            font-size: 4.5rem;
+            transition: transform 0.3s ease;
+            line-height: 1;
+        }
+
+        .mystery-box:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #ff758c;
+            border-style: solid;
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(255, 117, 140, 0.3);
+        }
+
+        .mystery-box:hover span {
+            transform: scale(1.15) rotate(8deg);
+        }
+
+        /* Cinematic Letters */
+        .cinematic-letter {
+            width: 80vw;
+            max-width: 800px;
+            height: 60vh;
+            background: #fffbf5;
+            border: 1px solid rgba(255, 182, 193, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            overflow-y: auto;
+            text-align: left;
+            box-shadow: 0 15px 40px rgba(255, 182, 193, 0.3);
+            position: relative;
+        }
+
+        .cinematic-letter p {
+            text-align: left;
+            font-size: 1.1rem;
+            color: #6a4c4c;
+            line-height: 1.8;
+        }
+
+        .signature {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.6rem;
+            color: #d81b60;
+            margin-top: 20px;
+            display: block;
+        }
+
+        /* Scrapbook Journal Photo Book Style */
+        .scrapbook-container {
+            width: 88vw;
+            max-width: 900px;
+            height: 68vh;
+            background: #fff8f0;
+            background-image: linear-gradient(#f9ebee 1px, transparent 1px);
+            background-size: 100% 28px;
+            border-radius: 16px;
+            border: 4px solid #ffb3c6;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.4);
+            position: relative;
+            overflow-y: auto;
+            color: #5c4033;
+        }
+
+        .scrapbook-header {
+            font-family: 'Sacramento', cursive;
+            font-size: 3rem;
+            color: #d81b60;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .scrapbook-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: center;
+            justify-items: center;
+        }
+
+        .heart-photo-frame {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            background: #fff;
+            padding: 8px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.2);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 2px solid #ffccd5;
+        }
+
+        .heart-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+
+        .heart-photo-frame:hover {
+            transform: scale(1.1) rotate(3deg);
+            z-index: 10;
+        }
+
+        /* Cake Stage */
+        .cake-stage-full {
+            font-size: clamp(7rem, 13vw, 11rem);
+            margin: 15px 0;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 20px 30px rgba(255, 182, 193, 0.5));
+            line-height: 1;
+        }
+
+        /* 100 Things Card Container */
+        .reasons-container {
+            width: 80vw;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 143, 171, 0.4);
+            border-radius: 25px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .reason-display {
+            font-size: 1.2rem;
+            color: #6a4c4c;
+            min-height: 100px;
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #fffbf5;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff758c;
+            border-right: 4px solid #ff758c;
+            line-height: 1.6;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+        }
+
+        .reason-counter {
+            font-size: 0.9rem;
+            color: #d81b60;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Spotify Playlist Card Style */
+        .spotify-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 143, 171, 0.5);
+            border-radius: 25px;
+            padding: 30px 40px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
+            max-width: 550px;
+            width: 85vw;
+            margin-bottom: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .spotify-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        .spotify-link-btn {
+            display: inline-block;
+            background: #1db954;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 15px;
+            box-shadow: 0 8px 20px rgba(29, 185, 84, 0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .spotify-link-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            background: #1ed760;
+            box-shadow: 0 12px 25px rgba(29, 185, 84, 0.4);
+        }
+
+        /* Action & Navigation Buttons */
+        .action-btn {
+            background: linear-gradient(135deg, #ff758c, #ff8fab);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 117, 140, 0.35);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(255, 117, 140, 0.5);
+        }
+
+        .back-btn-fullscreen {
+            background: transparent;
+            border: 2px solid rgba(216, 27, 96, 0.3);
+            color: #b56576;
+            margin-top: 10px;
+            padding: 8px 25px;
+            font-size: 0.9rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-btn-fullscreen:hover {
+            background: rgba(255, 182, 193, 0.2);
+            color: #d81b60;
+            border-color: #d81b60;
+        }
+
+        .nav-button-row {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .hidden-el { display: none !important; }
+
+        #confetti-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        @media(max-width: 900px) {
+            .mystery-grid { grid-template-columns: repeat(2, 1fr); }
+            .scrapbook-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-button-row { flex-direction: column; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="fullscreen-container">
+
+        <!-- SLIDE 0: Main Welcome Sunflower -->
+        <div id="slide-main" class="slide active">
+            <h1>A Special Surprise Awaits</h1>
+            <p>You have received a magical experience created just for you. Tap the sunflower to unlock it!</p>
+            <div class="main-gift" onclick="goToSlide('slide-choices')">🌻</div>
+        </div>
+
+        <!-- SLIDE 1: Four Mystery Gift Boxes Selection Screen -->
+        <div id="slide-choices" class="slide">
+            <h1>Choose a Mystery Gift 🌟</h1>
+            <p>Four mysteries are waiting for you. Tap any to see what secret it holds:</p>
+            <div class="mystery-grid">
+                <div class="mystery-box" onclick="goToSlide('slide-letter')">
+                    <span>🎁</span>
+                </div>
+                <div class="mystery-box" onclick="goToSlide('slide-photos')">
+                    <span>💌</span>
+                </div>
+                <div class="mystery-box" onclick="goToSlide('slide-cake')">
+                    <span>🎂</span>
+                </div>
+                <div class="mystery-box" onclick="goToSlide('slide-reasons')">
+                    <span>✨</span>
+                </div>
+            </div>
+            
+            <div class="nav-button-row">
+                <button class="back-btn-fullscreen" onclick="goToSlide('slide-main')">← Main Start</button>
+                <button class="action-btn" style="margin-top: 0; padding: 10px 25px; font-size: 0.9rem;" onclick="goToSlide('slide-thanks')">✨ Final Surprise Message</button>
+            </div>
+        </div>
+
+        <!-- SLIDE 2A: Full Screen Cinematic Birthday Letter -->
+        <div id="slide-letter" class="slide">
+            <h1>A Letter From The Heart 💌</h1>
+            <div class="cinematic-letter">
+                <p>Happy Birthday, Vedika ❤️🎂,</p><br>
+                <p>I don't know if you'll ever truly understand how much you mean to me, but I hope that someday you realise just how special you are to me. And since it's your birthday, I wanted to write something from my heart, something that reminds you of how much you mean to me and how grateful I am that our paths crossed.</p><br>
+                <p>It's honestly crazy to think that everything started with CODM. What began as a game slowly turned into daily conversations, random talks, late-night calls, and eventually those calls where we'd fall asleep without even realising it. Somewhere along the way, you went from being someone I played games with to someone I genuinely looked forward to talking to every single day. I never expected a person I met through a game to become such an important part of my life, but somehow, you did.</p><br>
+                <p>There are so many little things about you that I love. Your hair, your eyes, your voice, your smile, and especially that smile you get after realising you've successfully ragebaited me.The way you manage to irritate me and make me smile at the same time is genuinely impressive and they're some of the things I'll always remember about you.</p><br>
+                <P>I miss our CODM matches, our late-night conversations, the random topics that somehow kept us talking for hours, and those sleepy calls where neither of us really wanted to hang up. Even the smallest moments became memories that mean something to me now. It's funny how ordinary things can become so special when they're shared with the right person.</p><br>
+                <p>I'm not going to pretend that everything has been easy or that I completely understand where life has taken us. Things have changed, and there are moments I wish had turned out differently. But despite everything, I'm still grateful that I got to know you. I got to know your silly side, your caring side, your annoying side, and all those little parts of you that made me grow so attached to you. And if I could go back to the day we first met, knowing everything I know now, I think I'd still want to meet you. Because even if I couldn't predict where we'd end up, meeting you gave me memories I'll always be thankful for.</p><br>
+                <p>Vedika, on your birthday, I genuinely wish you all the happiness this world has to offer. I hope you achieve everything you've ever dreamed of, that life gives you countless reasons to smile, and that you always have people around you who appreciate you for exactly who you are. I hope you take care of yourself, look after your health, never doubt your worth. You have so much ahead of you, and I really hope life treats you beautifully.</p><br>
+                <p>I hope this new year of your life brings you new experiences, unforgettable memories, lots of laughter, and the kind of happiness that stays even after the moment has passed. Keep being the person you are, keep smiling that beautiful smile of yours, and please never lose the little things that make you special. And maybe, just maybe, try ragebaiting me a little less and please stop saying hat to me. Although, knowing you, that's probably an impossible birthday wish.</p><br>
+                <p>I don't know what place I'll have in your life as time goes on, and I don't want to make your birthday about that. Today is about you, your happiness, and the wonderful person you are. Regardless of what the future holds for us, I want you to know that the time we've shared has meant a lot to me, and I'll always be grateful for the happiness and memories you brought into my life.</p><br>
+                <p>Thank you for being a part of my life, for all the laughs, the late-night talks, the memories, and even the little arguments that somehow became funny later. Thank you for being someone who made ordinary days feel a little more special. I'll always hope for the best for you, even as life takes us in whatever direction it chooses.I hope today makes you feel as special as you truly are. You deserve a beautiful birthday, a beautiful year ahead, and a life filled with reasons to be happy.</p><br>
+                <p>Happy Birthday once again, Vedika. Take care of yourself, keep that smile on your face, and never forget how precious you are.</p><br>
+                <p>I am so proud of you.</p><br>
+                <p>Happy birthday, my love.❤️</p><br>
+                <p>Have the most unforgettable and joyous birthday ever!</p>
+                <span class="signature">With all my love, Ayush</span>
+            </div>
+            <button class="back-btn-fullscreen" onclick="goToSlide('slide-choices')">← Back to Boxes</button>
+        </div>
+
+        <!-- SLIDE 2B: Scrapbook Photo Journal -->
+        <div id="slide-photos" class="slide" style="padding: 15px;">
+            <div class="scrapbook-container">
+                <div class="scrapbook-header">Soo Pretty You Are ✨</div>
+                
+                <div class="scrapbook-grid">
+                    <div class="heart-photo-frame"><img src="images/photo1.jpeg" alt="Memory 1"></div>
+                    <div class="heart-photo-frame"><img src="images/photo3.jpeg" alt="Memory 3"></div>
+                    <div class="heart-photo-frame"><img src="images/photo2.jpeg" alt="Memory 2"></div>
+                    <div class="heart-photo-frame"><img src="images/photo4.jpeg" alt="Memory 4"></div>
+                    <div class="heart-photo-frame"><img src="images/photo5.jpeg" alt="Memory 5"></div>
+                    <div class="heart-photo-frame"><img src="images/photo6.jpeg" alt="Memory 6"></div>
+                </div>
+            </div>
+
+            <button class="back-btn-fullscreen" style="margin-top: 15px;" onclick="goToSlide('slide-choices')">← Back to Boxes</button>
+        </div>
+
+        <!-- SLIDE 2C: Full Screen Interactive Cake with Extreme Effects -->
+        <div id="slide-cake" class="slide">
+            <h1 id="cake-title">Time For Cake! 🎂</h1>
+            <p id="cake-desc">Close your eyes and make a deep wish in your heart, then blow out the burning candles to make it come true.</p>
+            
+            <div id="cake-element" class="cake-stage-full">🎂🔥</div>
+
+            <button id="btn-blow" class="action-btn" onclick="executeBlowCandles()">Blow Out Candles 💨</button>
+            <button id="btn-cut" class="action-btn hidden-el" onclick="executeCutCake()">Cut The Cake 🔪🍰</button>
+            <button id="btn-cake-back" class="back-btn-fullscreen hidden-el" onclick="goToSlide('slide-choices')">← Back to Boxes</button>
+        </div>
+
+        <!-- SLIDE 2D: "100 Things I Like About You" Experience -->
+        <div id="slide-reasons" class="slide">
+            <h1>100 Things I Like About You ✨</h1>
+            <p style="margin-bottom: 15px;">Click through to read every single reason why you are so special!</p>
+            
+            <div class="reasons-container">
+                <div id="reason-counter" class="reason-counter">Reason #1 of 100</div>
+                <div id="reason-text-display" class="reason-display">
+                    "Your beautiful smile."
+                </div>
+                <button class="action-btn" onclick="nextReason()">Next Reason ➔</button>
+            </div>
+
+            <button class="back-btn-fullscreen" onclick="goToSlide('slide-choices')">← Back to Boxes</button>
+        </div>
+
+        <!-- SLIDE 3: Thank You Final Slide with Spotify Playlist Link -->
+        <div id="slide-thanks" class="slide">
+            <h1>Thank You For Being You ❤️</h1>
+            <p style="max-width: 600px; margin-bottom: 15px;">
+                I hope this little experience brought a big smile to your face. Before you go, listen to the special playlist I made just for you, my dear just friends! 🎶
+            </p>
+
+            <div class="spotify-card">
+                <div class="spotify-icon">🎧</div>
+                <h3 style="color: #5c4033; font-size: 1.3rem; margin-bottom: 5px;">Your Birthday Soundtrack</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 0;">A collection of songs chosen straight from the heart.</p>
+                <!-- Replace the href="#" with your actual Spotify playlist link -->
+                <a href="https://open.spotify.com/playlist/0JKdiAI48qhHwsaIfZcuwM?si=Bfpo8fgMTWqJsIv2DUnDOQ&utm_source=copy-link&pt=ee76f5246c42d84cba1c50dee237c82a" target="_blank" class="spotify-link-btn">Listen on Spotify 🟢</a>
+            </div>
+
+            <div class="nav-button-row" style="margin-top: 10px;">
+                <button class="action-btn" style="margin-top: 0; padding: 10px 25px; font-size: 0.9rem;" onclick="goToSlide('slide-choices')">Explore Boxes Again 🎁</button>
+                <button class="back-btn-fullscreen" style="margin-top: 0;" onclick="goToSlide('slide-main')">Back to Start 🏠</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function goToSlide(slideId) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(s => s.classList.remove('active'));
+            document.getElementById(slideId).classList.add('active');
+
+            if (slideId === 'slide-cake') {
+                resetCakeProcess();
+            }
+        }
+
+        // Cake Sequence Logic with Extreme Confetti Waves
+        function executeBlowCandles() {
+            document.getElementById('cake-element').innerText = '🎂'; 
+            document.getElementById('cake-title').innerText = 'Make a Wish! ✨';
+            document.getElementById('cake-desc').innerText = 'The candles are extinguished! Now, slice your birthday cake to celebrate.';
+            document.getElementById('btn-blow').classList.add('hidden-el');
+            document.getElementById('btn-cut').classList.remove('hidden-el');
+            triggerConfettiBurst();
+        }
+
+        function executeCutCake() {
+            document.getElementById('cake-element').innerText = '🍰🎉✨'; 
+            document.getElementById('cake-title').innerText = 'PARTY TIME! 🥳🔥';
+            document.getElementById('cake-desc').innerText = 'Your wish is locked in and the cake is sliced!.';
+            document.getElementById('btn-cut').classList.add('hidden-el');
+            document.getElementById('btn-cake-back').classList.remove('hidden-el');
+            
+            // Extreme Multi-Wave Confetti Explosion
+            triggerConfettiBurst();
+            setTimeout(triggerConfettiBurst, 300);
+            setTimeout(triggerConfettiBurst, 600);
+        }
+
+        function resetCakeProcess() {
+            document.getElementById('cake-element').innerText = '🎂🔥';
+            document.getElementById('cake-title').innerText = 'Time For Cake! 🎂';
+            document.getElementById('cake-desc').innerText = 'Close your eyes and make a deep wish in your heart, then blow out the burning candles to make it come true.';
+            document.getElementById('btn-blow').classList.remove('hidden-el');
+            document.getElementById('btn-cut').classList.add('hidden-el');
+            document.getElementById('btn-cake-back').classList.add('hidden-el');
+        }
+
+        // All 100 Things I Like About You Logic
+        const reasonsList = [
+            "Your beautiful smile.",
+            "Your gorgeous hair.",
+            "Your voice.",
+            "The way you laugh.",
+            "The way you tease me.",
+            "That pretty eyes of yours.",
+            "Your cute little habits.",
+            "The way you smile after successfully ragebaiting me",
+            "Your personality.",
+            "Your sense of humour.",
+            "The way you ragebait me.",
+            "The way you annoy me.",
+            "The way you make me smile.",
+            "And the way you can annoy me and still make me smile.",
+            "The way you make boring conversations interesting.",
+            "Your silly side.",
+            "Your caring side.",
+            "The way you express yourself.",
+            "The way you talk about things you love.",
+            "Your random thoughts.",
+            "Your unexpected jokes.",
+            "The way you make me laugh.",
+            "The sound of your voice when you're sleepy.",
+            "Your cute reactions.",
+            "The way you say my name.",
+            "The expressions you make.",
+            "The little changes in your voice according to the situation.",
+            "Your adorable mood swings.",
+            "The way you get excited over little things.",
+            "The way you scold me.",
+            "The way you can turn a normal moment into a memorable one.",
+            "The way we first met on CODM.",
+            "The memories we made while playing CODM together.",
+            "The way our random games turned into long conversations.",
+            "Our late-night calls.",
+            "The times we fell asleep on call.",
+            "You have a soul that is impossible not to love.",
+            "The comfort I felt just hearing your voice.",
+            "Our random unserious conversations.",
+            "Your sweet good morning and good night texts make my day(not that gm and gn).",
+            "The way even the simplest moments with you became special.",
+            "The happiness I felt whenever I saw your message.",
+            "The excitement of knowing we were going to talk.",
+            "The way you could make me forget about a bad day for a while.",
+            "The comfort of having you around, even from miles away.",
+            "Your amazing taste in music.",
+            "The way talking to you became part of my daily routine.",
+            "The way you feel like home. ",
+            "The memories that still make me smile.",
+            "The way time seemed to pass quickly when we talked.",
+            "The little things you said that stayed in my mind.",
+            "The way you became someone I wanted to tell things to.",
+            "The feeling of being understood during our conversations.",
+            "Your confidence.",
+            "You look like a walking piece of art.",
+            "The way you made me look forward to the end of a long day.",
+            "The little moments that probably seemed ordinary to you but meant a lot to me.",
+            "The way you became someone I talked about to my mom",
+            "The fact that my mom still asks about you.",
+            "The fact that my brother still asks about you.",
+            "The memories that make me grateful we crossed paths.",
+            "Your playful nature.",
+            "You bring color into a black-and-white world.",
+            "Your smile is my favorite view.",
+            "Your talent for ragebaiting me. ",
+            "The satisfaction you get from annoying me.",
+            "The way you probably know exactly how to irritate me.",
+            "The way I can be annoyed with you and still want to keep talking to you.",
+            "Your presence have healing powers, I swear.",
+            "The little details that make you different from everyone else.",
+            "The way you can be both sweet and annoying.",
+            "The way you can make a simple moment memorable.",
+            "Your honesty when you choose to open up.",
+            "The moments when you let me see a softer side of you.",
+            "The times you showed that you cared.",
+            "The way my feelings grew through the smallest moments.",
+            "The fact that I can remember so many small things about us.",
+            "The way your happiness matters to me.",
+            "The way I hope you always have reasons to smile.",
+            "The way I still wish you happiness, regardless of what happens between us.",
+            "The way knowing you has given me moments I'll always remember.",
+            "The fact that I wouldn't want to erase the good memories we shared.",
+            "The way you taught me that even an online connection can feel real and meaningful.",
+            "The fact that distance couldn't stop us from becoming close.",
+            "Your beauty takes my breath away, every single time. ",
+            "Your smile is the best cure for a bad mood.",
+            "Your presence is a gift I am thankful for every day.",
+            "Your eyes shine brighter than the stars at night.",
+            "Your laugh makes my heart skip a beat.",
+            "The way you made me fall in love with you.",
+            "The way I fell for someone this different from me.",
+            "The way I am unable to hate you.",
+            "The fact that you are you.",
+            "The fact that, we are still together after so many goodbyes.",
+            "The fact that, among all the people I could have met, I got to meet you.",
+            "The way you became someone I never expected to care about this much.",
+            "The way you became my love, my favourite ragebaiter, and someone who holds a special place in my heart.",
+            "Because you're Vedika. Not because you're perfect, not because every moment has been easy, but because you're you, and somewhere along the way, you became someone I genuinely, deeply care about.",
+            "Only thing I hate about you is I am just your friend(maybe something more that in future,who knows lol)."
+        ];
+
+        let currentReasonIndex = 0;
+
+        function nextReason() {
+            currentReasonIndex = (currentReasonIndex + 1) % reasonsList.length;
+            const displayBox = document.getElementById('reason-text-display');
+            const counterBox = document.getElementById('reason-counter');
+            
+            displayBox.style.opacity = 0;
+            setTimeout(() => {
+                displayBox.innerText = `"${reasonsList[currentReasonIndex]}"`;
+                counterBox.innerText = `Reason #${currentReasonIndex + 1} of 100`;
+                displayBox.style.opacity = 1;
+            }, 200);
+        }
+
+        // Confetti Engine
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function triggerConfettiBurst() {
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2,
+                    vx: (Math.random() - 0.5) * 22,
+                    vy: (Math.random() - 0.5) * 22 - 5,
+                    size: Math.random() * 9 + 4,
+                    color: ['#ff758c', '#ffb3c6', '#ffd166', '#ff8fab', '#ff4d6d', '#ffffff'][Math.floor(Math.random() * 6)],
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.008
+                });
+            }
+        }
+
+        function renderConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.4;
+                p.alpha -= p.decay;
+
+                if (p.alpha <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+            });
+            requestAnimationFrame(renderConfetti);
+        }
+        renderConfetti();
+    </script>
+</body>
+</html>
